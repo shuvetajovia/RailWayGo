@@ -2,29 +2,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-class Bogie {
-    private String name;
-    private int capacity;
-
-    public Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    @Override
-    public String toString() {
-        return "Bogie{name='" + name + "', capacity=" + capacity + "}";
-    }
-}
-
 public class UC7SortBogieByCapacityApp {
 
     public static void main(String[] args) {
@@ -47,7 +24,7 @@ public class UC7SortBogieByCapacityApp {
 
         System.out.println();
 
-        // Sort by capacity using Comparator.comparingInt and lambda
+        // Sort by capacity using Comparator + lambda
         passengerBogies.sort(Comparator.comparingInt(Bogie::getCapacity));
 
         System.out.println("After sorting by capacity (ascending):");
@@ -56,6 +33,6 @@ public class UC7SortBogieByCapacityApp {
         }
 
         System.out.println();
-        System.out.println("UC7 execution completed. Program can continue with planning/analytics.");
+        System.out.println("UC7 execution completed.");
     }
 }
