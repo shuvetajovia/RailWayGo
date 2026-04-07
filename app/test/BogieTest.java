@@ -1,25 +1,27 @@
 @Test
-void testSafety_AllBogiesValid() {
-    List<GoodsBogie> bogies = Arrays.asList(
-            new GoodsBogie("Cylindrical", "Petroleum"),
-            new GoodsBogie("Open", "Coal")
-    );
-
-    assertTrue(UC12SafetyComplianceApp.isTrainSafe(bogies));
+void testException_ValidCapacityCreation() throws Exception {
+    Bogie b = new Bogie("Sleeper", 50);
+    assertEquals(50, b.getCapacity());
 }
 
 @Test
-void testSafety_CylindricalWithInvalidCargo() {
-    List<GoodsBogie> bogies = Arrays.asList(
-            new GoodsBogie("Cylindrical", "Coal")
-    );
-
-    assertFalse(UC12SafetyComplianceApp.isTrainSafe(bogies));
+void testException_NegativeCapacityThrowsException() {
+    assertThrows(InvalidCapacityException.class, () -> {
+        new Bogie("Sleeper", -10);
+    });
 }
 
 @Test
-void testSafety_EmptyBogieList() {
-    List<GoodsBogie> bogies = new ArrayList<>();
+void testException_ZeroCapacityThrowsException() {
+    assertThrows(InvalidCapacityException.class, () -> {
+        new Bogie("Sleeper", 0);
+    });
+}
 
-    assertTrue(UC12SafetyComplianceApp.isTrainSafe(bogies));
+@Test
+void testException_ExceptionMessageValidation() {
+    Exception e = assertThrows(InvalidCapacityException.class, () -> {
+        new Bogie("Sleeper", 0);
+    });
+    assertEquals("Capacity must be greater than zero", e.getMessage());
 }
