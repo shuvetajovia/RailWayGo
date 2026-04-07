@@ -2,9 +2,8 @@ class GoodsBogie {
     private String type;
     private String cargo;
 
-    public GoodsBogie(String type, String cargo) {
+    public GoodsBogie(String type) {
         this.type = type;
-        this.cargo = cargo;
     }
 
     public String getType() {
@@ -13,6 +12,14 @@ class GoodsBogie {
 
     public String getCargo() {
         return cargo;
+    }
+
+    public void assignCargo(String cargo) {
+        // ❌ Unsafe rule
+        if (type.equalsIgnoreCase("Rectangular") && cargo.equalsIgnoreCase("Petroleum")) {
+            throw new CargoSafetyException("Petroleum cannot be assigned to Rectangular bogie");
+        }
+        this.cargo = cargo;
     }
 
     @Override

@@ -1,27 +1,28 @@
 @Test
-void testException_ValidCapacityCreation() throws Exception {
-    Bogie b = new Bogie("Sleeper", 50);
-    assertEquals(50, b.getCapacity());
+void testCargo_SafeAssignment() {
+    GoodsBogie b = new GoodsBogie("Cylindrical");
+    b.assignCargo("Petroleum");
+    assertEquals("Petroleum", b.getCargo());
 }
 
 @Test
-void testException_NegativeCapacityThrowsException() {
-    assertThrows(InvalidCapacityException.class, () -> {
-        new Bogie("Sleeper", -10);
+void testCargo_UnsafeAssignmentHandled() {
+    GoodsBogie b = new GoodsBogie("Rectangular");
+
+    assertThrows(CargoSafetyException.class, () -> {
+        b.assignCargo("Petroleum");
     });
 }
 
 @Test
-void testException_ZeroCapacityThrowsException() {
-    assertThrows(InvalidCapacityException.class, () -> {
-        new Bogie("Sleeper", 0);
-    });
-}
+void testCargo_CargoNotAssignedAfterFailure() {
+    GoodsBogie b = new GoodsBogie("Rectangular");
 
-@Test
-void testException_ExceptionMessageValidation() {
-    Exception e = assertThrows(InvalidCapacityException.class, () -> {
-        new Bogie("Sleeper", 0);
-    });
-    assertEquals("Capacity must be greater than zero", e.getMessage());
+    try {
+        b.assignCargo("Petroleum");
+    } catch (CargoSafetyException e) {
+        // ignore
+    }
+
+    assertNull(b.getCargo());
 }
