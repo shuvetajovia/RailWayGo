@@ -1,38 +1,31 @@
 @Test
-void testGrouping_BogiesGroupedByType() {
+void testReduce_TotalSeatCalculation() {
     List<Bogie> bogies = Arrays.asList(
-            new Bogie("Sleeper", 72),
-            new Bogie("Sleeper", 80),
-            new Bogie("AC Chair", 60)
+            new Bogie("Sleeper", 70),
+            new Bogie("AC", 50)
     );
 
-    Map<String, List<Bogie>> result =
-            UC9GroupBogiesByTypeApp.groupBogiesByType(bogies);
+    int total = UC10TotalSeatCapacityApp.calculateTotalCapacity(bogies);
 
-    assertTrue(result.containsKey("Sleeper"));
-    assertEquals(2, result.get("Sleeper").size());
+    assertEquals(120, total);
 }
 
 @Test
-void testGrouping_DifferentBogieTypes() {
-    List<Bogie> bogies = Arrays.asList(
-            new Bogie("Sleeper", 72),
-            new Bogie("AC Chair", 60),
-            new Bogie("First Class", 50)
-    );
-
-    Map<String, List<Bogie>> result =
-            UC9GroupBogiesByTypeApp.groupBogiesByType(bogies);
-
-    assertEquals(3, result.size());
-}
-
-@Test
-void testGrouping_EmptyBogieList() {
+void testReduce_EmptyBogieList() {
     List<Bogie> bogies = new ArrayList<>();
 
-    Map<String, List<Bogie>> result =
-            UC9GroupBogiesByTypeApp.groupBogiesByType(bogies);
+    int total = UC10TotalSeatCapacityApp.calculateTotalCapacity(bogies);
 
-    assertTrue(result.isEmpty());
+    assertEquals(0, total);
+}
+
+@Test
+void testReduce_SingleBogieCapacity() {
+    List<Bogie> bogies = Arrays.asList(
+            new Bogie("Sleeper", 80)
+    );
+
+    int total = UC10TotalSeatCapacityApp.calculateTotalCapacity(bogies);
+
+    assertEquals(80, total);
 }
