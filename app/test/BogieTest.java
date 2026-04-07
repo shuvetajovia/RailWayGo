@@ -1,31 +1,25 @@
 @Test
-void testReduce_TotalSeatCalculation() {
-    List<Bogie> bogies = Arrays.asList(
-            new Bogie("Sleeper", 70),
-            new Bogie("AC", 50)
+void testSafety_AllBogiesValid() {
+    List<GoodsBogie> bogies = Arrays.asList(
+            new GoodsBogie("Cylindrical", "Petroleum"),
+            new GoodsBogie("Open", "Coal")
     );
 
-    int total = UC10TotalSeatCapacityApp.calculateTotalCapacity(bogies);
-
-    assertEquals(120, total);
+    assertTrue(UC12SafetyComplianceApp.isTrainSafe(bogies));
 }
 
 @Test
-void testReduce_EmptyBogieList() {
-    List<Bogie> bogies = new ArrayList<>();
+void testSafety_CylindricalWithInvalidCargo() {
+    List<GoodsBogie> bogies = Arrays.asList(
+            new GoodsBogie("Cylindrical", "Coal")
+    );
 
-    int total = UC10TotalSeatCapacityApp.calculateTotalCapacity(bogies);
-
-    assertEquals(0, total);
+    assertFalse(UC12SafetyComplianceApp.isTrainSafe(bogies));
 }
 
 @Test
-void testReduce_SingleBogieCapacity() {
-    List<Bogie> bogies = Arrays.asList(
-            new Bogie("Sleeper", 80)
-    );
+void testSafety_EmptyBogieList() {
+    List<GoodsBogie> bogies = new ArrayList<>();
 
-    int total = UC10TotalSeatCapacityApp.calculateTotalCapacity(bogies);
-
-    assertEquals(80, total);
+    assertTrue(UC12SafetyComplianceApp.isTrainSafe(bogies));
 }
