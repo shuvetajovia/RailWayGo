@@ -1,40 +1,38 @@
-import org.junit.jupiter.api.Test;
-import java.util.*;
-import static org.junit.jupiter.api.Assertions.*;
+@Test
+void testGrouping_BogiesGroupedByType() {
+    List<Bogie> bogies = Arrays.asList(
+            new Bogie("Sleeper", 72),
+            new Bogie("Sleeper", 80),
+            new Bogie("AC Chair", 60)
+    );
 
-class BogieTest {
+    Map<String, List<Bogie>> result =
+            UC9GroupBogiesByTypeApp.groupBogiesByType(bogies);
 
-    @Test
-    void testFilter_CapacityGreaterThanThreshold() {
-        List<Bogie> bogies = Arrays.asList(
-                new Bogie("Sleeper", 80),
-                new Bogie("AC", 60)
-        );
+    assertTrue(result.containsKey("Sleeper"));
+    assertEquals(2, result.get("Sleeper").size());
+}
 
-        List<Bogie> result = UC8FilterBogieByCapacityApp.filterBogies(bogies, 70);
+@Test
+void testGrouping_DifferentBogieTypes() {
+    List<Bogie> bogies = Arrays.asList(
+            new Bogie("Sleeper", 72),
+            new Bogie("AC Chair", 60),
+            new Bogie("First Class", 50)
+    );
 
-        assertEquals(1, result.size());
-        assertTrue(result.get(0).getCapacity() > 70);
-    }
+    Map<String, List<Bogie>> result =
+            UC9GroupBogiesByTypeApp.groupBogiesByType(bogies);
 
-    @Test
-    void testFilter_NoBogiesMatching() {
-        List<Bogie> bogies = Arrays.asList(
-                new Bogie("AC", 50),
-                new Bogie("First", 40)
-        );
+    assertEquals(3, result.size());
+}
 
-        List<Bogie> result = UC8FilterBogieByCapacityApp.filterBogies(bogies, 70);
+@Test
+void testGrouping_EmptyBogieList() {
+    List<Bogie> bogies = new ArrayList<>();
 
-        assertTrue(result.isEmpty());
-    }
+    Map<String, List<Bogie>> result =
+            UC9GroupBogiesByTypeApp.groupBogiesByType(bogies);
 
-    @Test
-    void testFilter_EmptyBogieList() {
-        List<Bogie> bogies = new ArrayList<>();
-
-        List<Bogie> result = UC8FilterBogieByCapacityApp.filterBogies(bogies, 60);
-
-        assertTrue(result.isEmpty());
-    }
+    assertTrue(result.isEmpty());
 }
